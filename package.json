@@ -1,0 +1,14 @@
+{
+  "name": "elm-tutorial",
+  "version": "1.0.0",
+  "description": "Elm tutorial app from https://www.elm-tutorial.org/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nkhristinin",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^0.9.4"
+  }
+}
