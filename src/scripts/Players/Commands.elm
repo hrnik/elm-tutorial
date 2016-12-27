@@ -31,8 +31,8 @@ memberDecoder =
         (field "level" Decode.int)
 
 
-saveUrl : PlayerId -> String
-saveUrl playerId =
+playerUrl : PlayerId -> String
+playerUrl playerId =
     "http://localhost:4000/players/" ++ playerId
 
 
@@ -41,7 +41,7 @@ saveRequest player =
     Http.request
         { method = "PATCH"
         , headers = []
-        , url = saveUrl player.id
+        , url = playerUrl player.id
         , body = memberEncoded player |> Http.jsonBody
         , expect = Http.expectJson memberDecoder
         , timeout = Nothing
@@ -53,6 +53,25 @@ save : Player -> Cmd Msg
 save player =
     saveRequest player
         |> Http.send OnSave
+
+
+deleteRequest : Player -> Http.Request Player
+deleteRequest player =
+    Http.request
+        { method = "DELETE"
+        , headers = []
+        , url = playerUrl player.id
+        , body = memberEncoded player |> Http.jsonBody
+        , expect = Http.expectStringResponse (\_ -> Ok (player))
+        , timeout = Nothing
+        , withCredentials = False
+        }
+
+
+delete : Player -> Cmd Msg
+delete player =
+    deleteRequest player
+        |> Http.send OnDelete
 
 
 memberEncoded : Player -> Encode.Value
